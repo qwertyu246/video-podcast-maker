@@ -66,6 +66,116 @@ Topic
 
 ---
 
+## 核心工具：Remotion
+
+這個 workflow 的核心畫面生成工具是 **Remotion**。
+
+Remotion 可以理解成：
+
+> 用 React 來製作影片。
+
+也就是說，它不是傳統剪輯軟體，而是用類似前端開發的方式，把影片畫面寫成 React component。
+
+例如：
+
+```text
+React component
++ frame number
++ animation logic
++ audio / subtitle timing
+= video frame
+```
+
+因此，Remotion 很適合製作：
+
+- 技術解說影片
+- 資訊圖動畫
+- 流程圖動畫
+- 字幕型知識影片
+- 程式化生成的影片模板
+
+---
+
+## Remotion 原本的限制
+
+Remotion 本身很適合做動畫畫面，但如果要做一支完整影片，還會遇到幾個問題：
+
+```text
+配音要怎麼產生？
+字幕要怎麼對齊？
+每個段落的時間軸怎麼抓？
+畫面要怎麼跟旁白同步？
+音樂、音訊、字幕要怎麼整合？
+```
+
+也就是說，Remotion 解決的是「影片畫面生成」問題。
+
+但如果要做一支完整的旁白型影片，仍然需要自己額外處理：
+
+- 腳本
+- TTS 配音
+- 字幕
+- timing
+- 音訊同步
+- 後製或剪輯軟體整合
+
+---
+
+## video-podcast-maker 如何補上缺口？
+
+**video-podcast-maker** 的核心價值，是補上 Remotion 在「旁白型影片製作」上的兩個缺口：
+
+1. **語音製作**
+2. **內容腳本生成**
+
+Remotion 主要負責畫面與動畫，但語音、字幕、時間軸本來需要額外處理。  
+video-podcast-maker 先把語音這一段流程串起來，讓影片可以自動產生：
+
+```text
+podcast_audio.wav
+podcast_audio.srt
+timing.json
+```
+
+語音問題解決後，另一個大問題就是 **內容腳本要怎麼生成**。
+
+這部分 video-podcast-maker 也一併透過 `SKILL.md` 解決。  
+它把影片製作流程拆成明確的 agent workflow，讓 coding agent 可以按照步驟完成：
+
+```text
+主題定義
+→ 資料研究
+→ 內容整理
+→ podcast 腳本產生
+→ TTS
+→ 字幕與 timing
+→ Remotion 畫面
+→ render
+```
+
+因此，它不只是「幫 Remotion 加聲音」，而是把完整的旁白型影片 pipeline 包成一個可被 agent 執行的流程。
+
+流程大致是：
+
+```text
+主題
+→ SKILL workflow
+→ 內容腳本 podcast.txt
+→ TTS 語音 podcast_audio.wav
+→ 字幕 podcast_audio.srt
+→ section timing / timing.json
+→ Remotion 根據時間軸製作動畫
+→ render 成 MP4
+```
+
+換句話說，video-podcast-maker 讓影片製作流程變成：
+
+> 先透過 SKILL 產出內容腳本，再產生語音與字幕，最後讓 Remotion 根據時間軸製作畫面。
+
+這樣 Remotion 就不只是單純做動畫，而是可以根據旁白內容與時間軸，產生比較完整的影片。
+
+---
+
 ## 主要產物
 
 video-podcast-maker 通常會產出以下檔案：
@@ -89,6 +199,9 @@ video-podcast-maker 通常會產出以下檔案：
 負責整體影片產出流程。
 
 它會協助整理主題、產生腳本、生成 TTS 音訊、字幕與 timing，並讓後續 Remotion 可以依照這些素材做畫面。
+
+更精準地說，它的核心不是單一工具指令，而是一套 `SKILL.md` 定義的影片製作工作流。  
+這個 SKILL 讓 agent 知道應該如何從主題開始，逐步完成研究、腳本、語音、字幕、時間軸與 Remotion 影片生成。
 
 ### 2. MiniMax M2.7
 
@@ -132,7 +245,7 @@ React 視覺元件
 
 ```text
 1. 定義影片主題
-2. 產生 podcast 腳本
+2. 透過 video-podcast-maker 的 SKILL workflow 產生 podcast 腳本
 3. 確認腳本內容與長度
 4. 使用 Edge TTS 產生旁白
 5. 產生 SRT 字幕與 timing.json
@@ -203,9 +316,18 @@ openclaw-intro.mp4
 
 ---
 
-## 產出限制與觀察
+## 實測觀察：MiniMax M2.7 生成版本
 
-這次 demo 的生成過程中，使用 **MiniMax M2.7**，而不是 GPT、Claude、Gemini 這類 video-podcast-maker 原本較推薦或常見搭配的模型。
+這支影片是目前使用 **MiniMax M2.7** 生成十幾版後，效果相對比較好的一版。
+
+這版相對比較能呈現 OpenClaw 的運作方式，例如：
+
+- 多個 Agent 的分工
+- 任務如何流入系統
+- Route / Binding 如何把任務導向不同 Agent
+- OpenClaw 和單一 Coding Agent 的差異
+
+不過，這次 demo 的生成過程中，使用的是 **MiniMax M2.7**，而不是 GPT、Claude、Gemini 這類 video-podcast-maker 原本較推薦或常見搭配的模型。
 
 因此產出結果有幾個需要注意的地方：
 
@@ -226,55 +348,3 @@ video-podcast-maker workflow 實測 demo
 ```text
 video-podcast-maker 最佳視覺品質展示
 ```
-
----
-
-## 為什麼使用 Remotion？
-
-Remotion 很適合這類影片，因為它可以用 React 的方式描述畫面。
-
-也就是說，影片畫面不是手動剪輯出來，而是透過程式產生。
-
-這對技術型 demo 很有價值，因為畫面可以根據資料動態生成，例如：
-
-- 根據 section timing 切換場景
-- 根據字幕時間顯示文字
-- 根據旁白內容安排 visual beats
-- 使用 React component 管理視覺結構
-- 用程式控制動畫、節點、流程圖與進度條
-
----
-
-## Repo 內容
-
-```text
-.
-├── README.md
-└── openclaw-intro.mp4
-```
-
-這個 repo 不包含完整原始碼與中間產物。  
-它主要是用來展示 video-podcast-maker 的成果與流程說明。
-
----
-
-## Summary
-
-video-podcast-maker 的價值在於把影片產出流程串起來：
-
-```text
-主題
-→ 腳本
-→ 語音
-→ 字幕
-→ 時間軸
-→ Remotion 畫面
-→ MP4
-```
-
-本 repo 的 `openclaw-intro.mp4` 就是這個流程的實際成果。
-
-同時，本 demo 也補充了一個實測觀察：
-
-> 使用不同 coding model，video-podcast-maker 的 Remotion 視覺生成效果會有差異。  
-> 本次使用 MiniMax M2.7，因此結果應視為 MiniMax M2.7 條件下的 workflow demo。

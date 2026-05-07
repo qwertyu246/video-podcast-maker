@@ -1,0 +1,78 @@
+{
+  "total_duration": 144.408,
+  "fps": 30,
+  "total_frames": 4332,
+  "speech_rate": "+5%",
+  "sections": [
+    {
+      "name": "hero",
+      "label": "OpenClaw 來",
+      "start_time": 0,
+      "end_time": 24.298,
+      "duration": 24.298,
+      "start_frame": 0,
+      "duration_frames": 728,
+      "is_silent": false
+    },
+    {
+      "name": "problem",
+      "label": "單一 Agent 的",
+      "start_time": 24.298,
+      "end_time": 47.798,
+      "duration": 23.5,
+      "start_frame": 728,
+      "duration_frames": 704,
+      "is_silent": false
+    },
+    {
+      "name": "concepts",
+      "label": "OpenClaw 五",
+      "start_time": 47.798,
+      "end_time": 71.012,
+      "duration": 23.214,
+      "start_frame": 1433,
+      "duration_frames": 696,
+      "is_silent": false
+    },
+    {
+      "name": "routing",
+      "label": "實際運作方式",
+      "start_time": 71.012,
+      "end_time": 89.321,
+      "duration": 18.309,
+      "start_frame": 2130,
+      "duration_frames": 549,
+      "is_silent": false
+    },
+    {
+      "name": "use_cases",
+      "label": "使用情境非常多樣",
+      "start_time": 89.321,
+      "end_time": 110.083,
+      "duration": 20.762,
+      "start_frame": 2679,
+      "duration_frames": 622,
+      "is_silent": false
+    },
+    {
+      "name": "comparison",
+      "label": "跟一般 Coding",
+      "start_time": 110.083,
+      "end_time": 125.798,
+      "duration": 15.714,
+      "start_frame": 3302,
+      "duration_frames": 471,
+      "is_silent": false
+    },
+    {
+      "name": "summary",
+      "label": "OpenClaw 的",
+      "start_time": 125.798,
+      "end_time": 144.408,
+      "duration": 18.61,
+      "start_frame": 3773,
+      "duration_frames": 558,
+      "is_silent": false
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+[SECTION:hero]
+OpenClaw 來了。
+
+如果你覺得單一 Agent 已經無法應付複雜任務，
+你需要認識 OpenClaw。
+
+它不是聊天機器人，
+而是一個 Agent 編排系統。
+
+把多個 Agent、多個工具、多個路由全部串在一起，
+任務從 Discord、CLI、任何入口進來，
+都能精準送到對的 Agent。
+
+[SECTION:problem]
+單一 Agent 的問題是：任務一多就成了瓶頸。
+
+Planner 要等，Builder 要等，
+QA 要等，Infra 也要等，
+所有人都在排同一個隊。
+
+你需要的是：
+不同任務分流到不同專精 Agent。
+
+不是一個大廚做所有菜，
+而是一個廚房，多個專人，各司其職。
+
+[SECTION:concepts]
+OpenClaw 五個核心概念。
+
+Agent：執行任務的最小單位。
+Planner 拆解、Builder 執行、QA 驗收。
+
+Route：把任務導到對的 Agent。
+
+Binding：把 Discord 或 CLI 對應到特定 Agent。
+
+Tool 和 Script：讓 Agent 可以呼叫工具與腳本。
+
+Agent Team：多個 Agent 的分工結構。
+
+[SECTION:routing]
+實際運作方式：
+
+任務從 Discord 或 CLI 進來，
+先經過 Binding 識別入口，
+再進入 Route 判斷流向，
+交給對應的 Agent 執行，
+最後結果回傳回來。
+
+多個 Agent 接力，不再單一承擔。
+
+[SECTION:use_cases]
+使用情境非常多樣。
+
+Discord 多頻道自動分流，
+不同 channel 對應不同 Agent。
+
+Planner、Builder、QA 分工流水線，
+任務自動流轉，不需要人工盯場。
+
+自動化測試與部署監控，
+UI Test Agent 或 Infra Agent 自動執行。
+
+[SECTION:comparison]
+跟一般 Coding Agent 不同。
+
+Claude Code 是單一 Agent，獨立作戰，
+很強，但只能靠自己。
+
+OpenClaw 是編排層，
+管理多個 Agent 協作，
+多個入口，統一管理。
+
+[SECTION:summary]
+OpenClaw 的價值，
+不是讓單一 Agent 變強，
+而是讓多個 Agent 被組織成可管理的工作流。
+
+Route 精準分流，
+Binding 連接入口，
+Tool 擴展能力，
+Agent Team 協同運作。
+
+這就是 OpenClaw。
